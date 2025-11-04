@@ -1,0 +1,154 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Profile Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/avt"
+                android:background="@drawable/bg_border"
+                android:contentDescription="User Avatar"
+                android:padding="8dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Miles Morales"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/tvRole"
+                    android:text="Film Hunter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Account Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <!-- Account items -->
+        <LinearLayout
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_personal"
+
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="Personal Data"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_email"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="@string/email_payment"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_deactivate"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="Deactivate Account"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <!-- Privacy Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_policy"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <!-- Privacy items -->
+        <LinearLayout
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_notification"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="Notification"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_ticket"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="Your Ticket"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logout"
+            style="@style/SettingItemStyle"
+            >
+
+            <ImageView
+
+                android:src="@drawable/ic_logout"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="Logout"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">TicketApp</string>
+    <string name="txt_home">Home</string>
+    <string name="txt_cinema">Cinemas</string>
+    <string name="txt_ticket">Tickets</string>
+    <string name="txt_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="privacy_policy"><![CDATA[Privacy & Policy]]></string>
+    <string name="email_payment"><![CDATA[Email & Payment]]></string>
+
+        <string-array name="cities_array">
+            <item>An Giang</item>
+            <item>Bà Rịa - Vũng Tàu</item>
+            <item>Bắc Giang</item>
+            <item>Bắc Kạn</item>
+            <item>Bạc Liêu</item>
+            <item>Bắc Ninh</item>
+            <item>Bến Tre</item>
+            <item>Bình Định</item>
+            <item>Bình Dương</item>
+            <item>Bình Phước</item>
+            <item>Bình Thuận</item>
+            <item>Cà Mau</item>
+            <item>Cần Thơ</item>
+            <item>Cao Bằng</item>
+            <item>Đà Nẵng</item>
+            <item>Đắk Lắk</item>
+            <item>Đắk Nông</item>
+            <item>Điện Biên</item>
+            <item>Đồng Nai</item>
+            <item>Đồng Tháp</item>
+            <item>Gia Lai</item>
+            <item>Hà Giang</item>
+            <item>Hà Nam</item>
+            <item>Hà Nội</item>
+            <item>Hà Tĩnh</item>
+            <item>Hải Dương</item>
+            <item>Hải Phòng</item>
+            <item>Hậu Giang</item>
+            <item>Hòa Bình</item>
+            <item>Hưng Yên</item>
+            <item>Khánh Hòa</item>
+            <item>Kiên Giang</item>
+        </string-array>
+
+</resources>
