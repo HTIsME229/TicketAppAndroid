@@ -29,11 +29,10 @@ public class ShowTimeRepositoryImpl implements ShowTimeRepository {
     }
 
     @Override
-    public LiveData<Resource<List<Showtimes>>> getShowTimes(String date, String cinemaId) {
+    public LiveData<Resource<List<Showtimes>>> getShowTimes(String date, String cinemaId,String movieID) {
         MutableLiveData<Resource<List<Showtimes>>> data = new MutableLiveData<>();
         data.setValue(Resource.loading());
-
-        apiService.getShowTimes(date, cinemaId).enqueue(new Callback<List<Showtimes>>() {
+        apiService.getShowTimes(date, cinemaId,movieID).enqueue(new Callback<List<Showtimes>>() {
             @Override
             public void onResponse(Call<List<Showtimes>> call, Response<List<Showtimes>> response) {
                 if (response.isSuccessful()) {

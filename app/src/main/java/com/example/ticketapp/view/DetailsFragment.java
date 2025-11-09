@@ -82,6 +82,7 @@ public class DetailsFragment extends Fragment {
         movieViewModel.selectedMovie.observe(getViewLifecycleOwner(), movie -> {
             if (movie != null) {
                 initView(movie);
+
             }
         });
         binding.btnBookTicket.setOnClickListener(v->{

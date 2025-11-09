@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class Showtimes {
-    private String uid;
+    private String id;
     private String movieId;
 private  String roomName;
     private String cinemaId;
@@ -31,11 +31,11 @@ private List<Seat> seats;
 this.seats  = seats; }
 
     public String getId() {
-        return uid;
+        return id;
     }
 
-    public void setId(String uid) {
-        this.uid = uid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMovieId() {
@@ -55,11 +55,11 @@ this.seats  = seats; }
     }
 
     public String getUid() {
-        return uid;
+        return id;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUid(String id) {
+        this.id = id;
     }
 
     public List<Seat> getSeats() {

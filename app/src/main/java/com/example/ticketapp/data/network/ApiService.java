@@ -18,7 +18,8 @@ public interface ApiService {
     @GET("getCinemas")
     Call<List<Cinema>> getCinemas(@Query("city") String city);
 
-    @GET("getShowTimes")
-    Call<List<Showtimes>> getShowTimes(@Query("date") String date, @Query("cinemaId") String cinemaID);
+    @GET("getShowtimes")
+    Call<List<Showtimes>> getShowTimes(@Query("date") String date, @Query("cinemaId") String cinemaID
+    , @Query("movieId") String movieID);
 }
 

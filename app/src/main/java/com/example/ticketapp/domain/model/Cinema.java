@@ -3,7 +3,7 @@ package com.example.ticketapp.domain.model;
 import java.util.List;
 
 public class Cinema {
-    private String uid;
+    private String id;
     private  String name;
     private String logoUrl;
     private double rating;
@@ -11,7 +11,7 @@ public class Cinema {
    private  String address;
    private String city;
    private List<Room> rooms;
-    public Cinema(String uid,String name, String logoUrl, double rating, String info, String address, String city, List<Room> rooms) {
+    public Cinema(String id,String name, String logoUrl, double rating, String info, String address, String city, List<Room> rooms) {
         this.name = name;
         this.logoUrl = logoUrl;
         this.rating = rating;
@@ -19,15 +19,15 @@ public class Cinema {
         this.address = address;
         this.city = city;
         this.rooms = rooms;
-        this.uid = uid;
+        this.id = id;
     }
 
     public String getUid() {
-        return uid;
+        return id;
     }
 
     public void setUid(String uid) {
-        this.uid = uid;
+        this.id = uid;
     }
 
     public String getName() {
