@@ -20,8 +20,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class CinemaViewModel extends ViewModel {
-    private final CinemaRepository repository;
-    private final ShowTimeRepository showTimeRepository;
     private MutableLiveData<List<Cinema>> listCinema = new MutableLiveData<>();
     public LiveData<List<Cinema>> _listCinema = listCinema;
     private MutableLiveData<String> cityLiveData = new MutableLiveData<>();
@@ -52,8 +50,6 @@ public class CinemaViewModel extends ViewModel {
 
     @Inject
     public CinemaViewModel(CinemaRepository repository, ShowTimeRepository showTimeRepository) {
-        this.repository = repository;
-        this.showTimeRepository = showTimeRepository;
         cinemasInCityLiveData.addSource(cityLiveData, city -> {
             if (currentSource != null) {
                 cinemasInCityLiveData.removeSource(currentSource);
@@ -66,6 +62,7 @@ public class CinemaViewModel extends ViewModel {
                 cinemasInCityLiveData.addSource(currentSource, cinemasInCityLiveData::setValue);
             }
         });
+
         showTimes.addSource(dateLiveDate, date -> {
             String cinemaID = cinemaLiveDate.getValue();
             String movieID = movieSelected.getValue();

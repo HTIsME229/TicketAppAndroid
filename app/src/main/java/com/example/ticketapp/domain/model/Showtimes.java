@@ -20,13 +20,23 @@ private List<Seat> seats;
     public Showtimes() {
     }
 
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
     // Constructor đầy đủ để dễ dàng tạo đối tượng trong code
     public Showtimes(String movieId, String cinemaId, String theaterId, Date startTime, Date endTime,
-                     List<Seat> seats) {
+                     List<Seat> seats, String roomName) {
         this.movieId = movieId;
         this.cinemaId = cinemaId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.roomName = roomName;
+
 
 this.seats  = seats; }
 

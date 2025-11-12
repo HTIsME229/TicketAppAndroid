@@ -43,5 +43,28 @@
         <item name="android:layout_width">32dp</item>
         <item name="android:layout_height">32dp</item>
     </style>
+    <style name="CheckoutLabelStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textColor">#AEAEAE</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CheckoutEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">#888888</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 </resources>

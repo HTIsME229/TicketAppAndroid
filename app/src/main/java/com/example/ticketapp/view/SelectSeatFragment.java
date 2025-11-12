@@ -7,31 +7,45 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import com.example.ticketapp.R;
+import com.example.ticketapp.adapter.SeatAdapter;
 import com.example.ticketapp.databinding.FragmentSelectSeatBinding;
 import com.example.ticketapp.domain.model.Cinema;
+import com.example.ticketapp.domain.model.Room;
+import com.example.ticketapp.domain.model.Seat;
 import com.example.ticketapp.domain.model.Showtimes; // Đảm bảo bạn đã import Showtimes
 import com.example.ticketapp.utils.Resource;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
 import com.example.ticketapp.viewmodel.MovieViewModel;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 public class SelectSeatFragment extends Fragment {
     private FragmentSelectSeatBinding binding;
     private final Calendar myCalendar = Calendar.getInstance();
     private CinemaViewModel cinemaViewModel;
     private MovieViewModel movieViewModel;
-
-    // Sửa 1: Dùng List<Cinema> thay vì Map để lấy ID dễ hơn
+    private SeatAdapter seatAdapter;
+    private RecyclerView recyclerViewSeats;
+    private int selectedCinemaPosition = AdapterView.INVALID_POSITION;
     private List<Cinema> currentCinemaList = new ArrayList<>();
+    private List<Showtimes> currentShowtimeList = new ArrayList<>();
     private String date;
     private String selectedCity;
 
@@ -45,18 +59,24 @@ public class SelectSeatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Khởi tạo ViewModel trước
         cinemaViewModel = new ViewModelProvider(requireActivity()).get(CinemaViewModel.class);
         movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
+        seatAdapter = new SeatAdapter((seat, position) -> {
 
+        });
+        recyclerViewSeats = binding.recyclerViewSeats;
+        recyclerViewSeats.setAdapter(seatAdapter);
+        binding.buttonCheckout.setOnClickListener(view1 ->{
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(SelectSeatFragmentDirections.actionSelectSeatFragmentToPaymentMethod());});
         // Setup các Observers
         setUpViewModelObservers();
-
         // Setup các Views
         setUpDatePicker();
         setupCitySpinner();
         setUpCinemaChoice();
+        setUpShowtimeChoice();
     }
 
     private void setUpViewModelObservers() {
@@ -71,9 +91,14 @@ public class SelectSeatFragment extends Fragment {
         cinemaViewModel.getCinemasByCity().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) {
                 updateCinemaSpinner(new ArrayList<>());
+
                 return;
             }
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                if(resource.getData().isEmpty()){
+                    updateCinemaSpinner(new ArrayList<>());
+                    updateShowtimeSpinner(new ArrayList<>());
+                }
                 updateCinemaSpinner(resource.getData());
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 updateCinemaSpinner(new ArrayList<>());
@@ -87,7 +112,9 @@ public class SelectSeatFragment extends Fragment {
                 return;
             }
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+
                 updateShowtimeSpinner(resource.getData());
+
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 updateShowtimeSpinner(new ArrayList<>());
             }
@@ -105,14 +132,17 @@ public class SelectSeatFragment extends Fragment {
         binding.spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                seatAdapter.setSeats(new ArrayList<>());
                 selectedCity = adapterView.getItemAtPosition(position).toString();
                 if (!selectedCity.isEmpty()) {
                     // Kích hoạt 'getCinemasByCity'
                     cinemaViewModel.setCity(selectedCity);
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
         binding.spinnerCity.setAdapter(adapter);
     }
@@ -134,6 +164,7 @@ public class SelectSeatFragment extends Fragment {
     }
 
     private void updateLabel() {
+        seatAdapter.setSeats(new ArrayList<>());
         // Sửa 2: Lỗi định dạng 'DD'
         // Dùng "dd" (ngày trong tháng) thay vì "DD" (ngày trong năm)
         String myFormat = "yyyy-MM-dd";
@@ -171,26 +202,81 @@ public class SelectSeatFragment extends Fragment {
     }
 
     private void setUpCinemaChoice() {
+
         binding.spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 // Sửa 4b: Lấy ID từ List (an toàn và dễ hơn)
                 if (position < currentCinemaList.size()) {
                     String selectedCinemaId = currentCinemaList.get(position).getUid();
+                    selectedCinemaPosition = position;
+                    // Lưu vị trí rạp đã chọn
 
-                    if(selectedCinemaId != null) {
+                    if (selectedCinemaId != null) {
                         // Kích hoạt 'getShowTimes'
                         cinemaViewModel.setCinemaID(selectedCinemaId);
                     }
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+    }
+
+    private void setUpShowtimeChoice() {
+
+        binding.spinnerShowtime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position < currentShowtimeList.size() &&
+                        selectedCinemaPosition != AdapterView.INVALID_POSITION && // Kiểm tra vị trí hợp lệ
+                        selectedCinemaPosition < currentCinemaList.size()) {
+
+                    // 1. Lấy Suất chiếu và Rạp phim
+                    Showtimes selectedShowtime = currentShowtimeList.get(position);
+                    Cinema selectedCinema = currentCinemaList.get(selectedCinemaPosition);
+
+                    // 2. Tìm thông tin phòng chiếu (Room)
+                    Room selectedRoom = null;
+                    for (Room room : selectedCinema.getRooms()) { // Giả sử Cinema có getRooms()
+                        if (room.getRoomName().equals(selectedShowtime.getRoomName())) {
+                            selectedRoom = room;
+                            break;
+                        }
+                    }
+
+                    // 3. Nếu tìm thấy phòng, lấy số cột
+                    int spanCount = 10; // Mặc định 10 cột nếu không tìm thấy
+                    if (selectedRoom != null) {
+                        // Giả sử Room có getSeatsPerRow()
+                        spanCount = selectedRoom.getSeatsPerRow();
+                    }
+
+                    // 4. (QUAN TRỌNG) Tạo và gán GridLayoutManager
+                    GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), spanCount);
+                    recyclerViewSeats.setLayoutManager(layoutManager);
+
+                    // 5. Gán dữ liệu ghế cho Adapter
+                    List<Seat> seats = selectedShowtime.getSeats();
+                    seatAdapter.setSeats(seats);
+                } else {
+                    // Xóa ghế nếu không có suất chiếu hoặc rạp phim
+                    seatAdapter.setSeats(new ArrayList<>());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
     }
 
     private void updateShowtimeSpinner(List<Showtimes> showtimeList) {
         // Sửa 5: Định dạng lại giờ và tạo Adapter bên ngoài vòng lặp
+        currentShowtimeList.clear();
+        currentShowtimeList.addAll(showtimeList);
 
         List<String> formattedShowtimes = new ArrayList<>();
         // Dùng SimpleDateFormat để format giờ: "19:30"

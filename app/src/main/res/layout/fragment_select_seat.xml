@@ -151,46 +151,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/grid_seats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_seats"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:columnCount="7"
-        app:rowCount="5"
-        app:layout_constraintTop_toBottomOf="@id/view_screen"
+        android:layout_marginBottom="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/button_checkout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_selected"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_selected"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_available"/>
-
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-        <View style="@style/SeatGap"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-        <ImageView style="@style/SeatStyle" app:srcCompat="@drawable/seat_reserved"/>
-
-    </androidx.gridlayout.widget.GridLayout>
-
+        app:layout_constraintTop_toBottomOf="@id/view_screen"
+        tools:listitem="@layout/item_seat" />
     <LinearLayout
         android:id="@+id/layout_legend"
         android:layout_width="0dp"
@@ -200,7 +174,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/grid_seats">
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_seats">
 
         <include layout="@layout/legend_item" android:id="@+id/legend_selected" />
         <include layout="@layout/legend_item" android:id="@+id/legend_reserved" />
