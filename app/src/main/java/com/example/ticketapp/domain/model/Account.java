@@ -5,14 +5,27 @@ public class Account {
         private String username;
 
         private String email;
+        private  String posterUrl;
     public Account() {
     }
 
+    public Account(String userId, String name, String email) {
 
-    public Account(String uid, String username, String email) {
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
+    public Account(String uid, String username, String email,String posterUrl) {
         this.username = username;
         this.email = email;
         this.uid = uid;
+        this.posterUrl = posterUrl;
 
     }
     public String getUid() {

@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.ticketapp.AuthenticationActivity;
 import com.example.ticketapp.R;
 import com.example.ticketapp.databinding.FragmentSettingsBinding;
+import com.example.ticketapp.domain.model.Account;
 import com.example.ticketapp.viewmodel.ProfileViewModel;
 
 
@@ -36,6 +38,7 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profileViewModel = new  ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        profileViewModel.getUserProfile().observe(getViewLifecycleOwner(), this::initView);
         binding.logout.setOnClickListener(v -> {
             profileViewModel.logout();
             startActivity(new Intent(getActivity(), AuthenticationActivity.class));
@@ -46,5 +49,12 @@ public class SettingsFragment extends Fragment {
             NavController navController = NavHostFragment.findNavController(SettingsFragment.this);
             navController.navigate(SettingsFragmentDirections.actionNavSettingsToMyTicket());
         });
+    }
+    private void initView(Account user){
+        binding.tvName.setText(user.getUsername());
+        Glide.with(binding.getRoot().getContext())
+                .load(user.getPosterUrl())
+                .error(R.drawable.ic_launcher_background)
+                .into(binding.ivAvatar);
     }
 }

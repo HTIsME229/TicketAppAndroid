@@ -16,14 +16,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.example.ticketapp.R;
 import com.example.ticketapp.adapter.CinemaAdapter;
 import com.example.ticketapp.adapter.MovieTabAdapter; // Adapter mới
 import com.example.ticketapp.databinding.FragmentHomeBinding;
+import com.example.ticketapp.domain.model.Account;
 import com.example.ticketapp.domain.model.Movie;
 import com.example.ticketapp.view.Movie.MovieListFragment;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
 import com.example.ticketapp.viewmodel.MovieViewModel;
+import com.example.ticketapp.viewmodel.ProfileViewModel;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.firestore.auth.User;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -35,11 +40,13 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
 
     private FragmentHomeBinding binding;
     private MovieViewModel movieViewModel;
+    private ProfileViewModel profileViewModel;
     private TabLayoutMediator tabLayoutMediator;
     private MovieTabAdapter movieTabAdapter; // Adapter mới
     private CinemaViewModel cinemaViewModel;
     private RecyclerView cinemaRecyclerView;
     private CinemaAdapter cinemaAdapter;
+    private  NavController navController;
 
     private final List<String> tabTitles = Arrays.asList("Đang chiếu", "Sắp chiếu");
 
@@ -56,10 +63,30 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hideToolbar();
+        profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        profileViewModel.getUserProfile().observe(getViewLifecycleOwner(),user -> {
+            if(user != null){
+                initView(user);
+            }
+        });
+        navController = NavHostFragment.findNavController(HomeFragment.this);
+        binding.ivAvatar.setOnClickListener(
+                view1 -> {
+                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment());
+                }
+        );
         cinemaAdapter = new CinemaAdapter();
         cinemaRecyclerView = binding.rvCinemas;
         cinemaRecyclerView.setAdapter(cinemaAdapter);
         setupMovieTabsViewPager(); // Hợp nhất logic setup vào đây
+    }
+
+    private void initView( Account user) {
+        binding.tvUsername.setText(user.getUsername());
+        Glide.with(binding.getRoot().getContext())
+                .load(user.getPosterUrl())
+                .error(R.drawable.ic_launcher_background)
+                .into(binding.ivAvatar);
     }
 
 
@@ -176,7 +203,7 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
     public void onMovieSelect(Movie movie) {
         if (movie != null) {
             movieViewModel.setSelectMovie(movie);
-            NavController navController = NavHostFragment.findNavController(HomeFragment.this);
+
             navController.navigate(HomeFragmentDirections.actionNavHomeToDetailsFragment());
         }
     }
