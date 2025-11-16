@@ -16,9 +16,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.ticketapp.databinding.ActivitySplashBinding;
+import com.example.ticketapp.utils.Resource;
 import com.example.ticketapp.view.LoginFragment;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
 import com.example.ticketapp.viewmodel.ProfileViewModel;
+
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -52,13 +55,24 @@ public class Splash extends AppCompatActivity {
 
         profileViewModel.observerAuthState().observe(this, isAuthenticated -> {;
             if (isAuthenticated) {
-                // Nếu đã đăng nhập, chuyển đến MainActivity
-                startActivity(new Intent(this, MainActivity.class));
-            } else {
+                profileViewModel.geUserById().observe(this, resource -> {;
+                    if (resource == null) {
+                        return;
+                    }
+                    if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                        profileViewModel.setUserProfile(resource.getData());
+                        startActivity(new Intent(this, MainActivity.class));
+                        finish();
+
+                    } else if (resource.getStatus() == Resource.Status.ERROR) {
+                    }
+                });
+            } else  {
                 // Nếu chưa đăng nhập, chuyển đến AuthenticationActivity
                 startActivity(new Intent(this, AuthenticationActivity.class));
+                finish();
             }
-            finish(); // Kết thúc Splash để không chạy tiếp
+          ; // Kết thúc Splash để không chạy tiếp
         });
 
     }

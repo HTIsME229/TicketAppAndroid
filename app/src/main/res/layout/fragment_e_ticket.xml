@@ -61,6 +61,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:padding="24dp">
 
                 <TextView
@@ -92,6 +93,7 @@
                     android:layout_marginTop="24dp"
                     android:columnCount="2"
                     android:rowCount="3"
+                    app:flow_verticalGap="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_film_title">

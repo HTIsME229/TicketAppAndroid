@@ -124,6 +124,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/myTicket"
+
             style="@style/SettingItemStyle">
 
             <ImageView

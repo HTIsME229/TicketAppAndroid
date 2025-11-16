@@ -1,8 +1,10 @@
 package com.example.ticketapp.di;
 
+import com.example.ticketapp.data.repository.BookingRepositoryImpl;
 import com.example.ticketapp.data.repository.CinemaRepositoryImpl;
 import com.example.ticketapp.data.repository.MovieRepositoryImpl;
 import com.example.ticketapp.data.repository.ShowTimeRepositoryImpl;
+import com.example.ticketapp.domain.repository.BookingRepository;
 import com.example.ticketapp.domain.repository.CinemaRepository;
 import com.example.ticketapp.domain.repository.MovieRepository;
 import com.example.ticketapp.domain.repository.ShowTimeRepository;
@@ -27,5 +29,9 @@ public abstract class RepositoryModule {
     @Binds
     @Singleton
     public abstract ShowTimeRepository bindShowTimeRepository(ShowTimeRepositoryImpl impl);
+      @Binds
+    @Singleton
+    public abstract BookingRepository bindBookingRepository(BookingRepositoryImpl impl);
+
 
 }

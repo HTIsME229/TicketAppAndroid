@@ -5,7 +5,16 @@ public class Account {
         private String username;
 
         private String email;
+    public Account() {
+    }
 
+
+    public Account(String uid, String username, String email) {
+        this.username = username;
+        this.email = email;
+        this.uid = uid;
+
+    }
     public String getUid() {
         return uid;
     }
@@ -13,12 +22,6 @@ public class Account {
     public void setUid(String uid) {
         this.uid = uid;
     }
-
-    public Account(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-    }
-
     public String getUsername() {
         return username;
     }

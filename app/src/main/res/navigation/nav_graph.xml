@@ -27,7 +27,11 @@
         android:id="@+id/nav_discovery"
         android:name="com.example.ticketapp.view.ExploreFragment"
         android:label="Explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_nav_discovery_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_bookmark"
         android:name="com.example.ticketapp.view.SavedPlanFragment"
@@ -36,11 +40,15 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.ticketapp.view.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_myTicket"
+            app:destination="@id/myTicket" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
 
-        android:name="com.example.ticketapp.view.DetailsFragment"
+        android:name="com.example.ticketapp.view.Movie.DetailsFragment"
         android:label="Details Movie"
         tools:layout="@layout/fragment_details" >
 
@@ -66,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/ETicket"
-        android:name="com.example.ticketapp.view.ETicket"
+        android:name="com.example.ticketapp.view.Ticket.ETicket"
         android:label="ETicket" />
     <dialog
         android:id="@+id/paymentSuccessDialog"
@@ -76,4 +84,22 @@
             android:id="@+id/action_paymentSuccessDialog_to_ETicket"
             app:destination="@id/ETicket" />
     </dialog>
+    <fragment
+        android:id="@+id/myTicket"
+        android:name="com.example.ticketapp.view.Ticket.MyTicket"
+        android:label="MyTicket" >
+
+        <action
+            android:id="@+id/action_myTicket_to_ETicket"
+            app:destination="@id/ETicket" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingTicketsFragment2"
+        android:name="com.example.ticketapp.view.Ticket.UpcomingTicketsFragment"
+        android:label="UpcomingTicketsFragment" />
+    <fragment
+        android:id="@+id/watchedTicketsFragment"
+        android:name="com.example.ticketapp.view.Ticket.WatchedTicketsFragment"
+        android:label="WatchedTicketsFragment" />
+
 </navigation>

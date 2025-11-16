@@ -1,4 +1,6 @@
-package com.example.ticketapp.domain.model;
+package com.example.ticketapp.domain.model.Res;
+
+import com.example.ticketapp.domain.model.Account;
 
 public class AuthResult {
     private boolean success;      // Thành công hay thất bại?

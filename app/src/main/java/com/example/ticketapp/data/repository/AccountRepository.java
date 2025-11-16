@@ -3,9 +3,10 @@ package com.example.ticketapp.data.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.ticketapp.domain.model.AuthResult;
+import com.example.ticketapp.domain.model.Res.AuthResult;
 import com.example.ticketapp.domain.model.Account;
 
+import com.example.ticketapp.utils.Resource;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +24,19 @@ public class AccountRepository {
 
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore db;
+    private MutableLiveData<Account> currentUser = new MutableLiveData<>();
+
+    public MutableLiveData<Account> getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Account _currentUser) {
+        currentUser.setValue(_currentUser);
+    }
+
+    public void clearUser() {
+        this.currentUser = null;
+    }
 @Inject
     public AccountRepository() {
         mAuth = FirebaseAuth.getInstance();
@@ -162,8 +176,23 @@ public class AccountRepository {
     }
 
     // Lấy thông tin user từ Firestore
-    public LiveData<Account> getUserData(String userId) {
-        MutableLiveData<Account> userData = new MutableLiveData<>();
+    public LiveData<Resource<Account>> getUserData() {
+        MutableLiveData<Resource<Account>> resultLiveData = new MutableLiveData<>();
+
+        // 1. Phát ra trạng thái LOADING
+        resultLiveData.setValue(Resource.loading());
+
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+        if (firebaseUser == null) {
+            // 2. Phát ra trạng thái ERROR nếu chưa đăng nhập
+            resultLiveData.setValue(Resource.error("Người dùng chưa đăng nhập."));
+            return resultLiveData;
+        }
+
+        String userId = firebaseUser.getUid();
+        String email = firebaseUser.getEmail();
+        String userName = firebaseUser.getDisplayName();
 
         db.collection("users")
                 .document(userId)
@@ -173,14 +202,21 @@ public class AccountRepository {
                         Account user = documentSnapshot.toObject(Account.class);
                         if (user != null) {
                             user.setUid(userId);
+                            user.setEmail(email);
+                            user.setUsername(userName);
                         }
-                        userData.setValue(user);
+                        // 3. Phát ra trạng thái SUCCESS
+                        resultLiveData.setValue(Resource.success(user));
                     } else {
-                        userData.setValue(null);
+                        // Tài liệu không tồn tại
+                        resultLiveData.setValue(Resource.error("Không tìm thấy dữ liệu người dùng."));
                     }
                 })
-                .addOnFailureListener(e -> userData.setValue(null));
+                .addOnFailureListener(e -> {
+                    // 4. Phát ra trạng thái ERROR khi truy vấn thất bại
+                    String errorMessage = e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Lỗi truy vấn dữ liệu.";
+                    resultLiveData.setValue(Resource.error(errorMessage));
+                });
 
-        return userData;
-    }
-}
+        return resultLiveData;
+    }}

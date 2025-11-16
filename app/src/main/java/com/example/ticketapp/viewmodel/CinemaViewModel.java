@@ -20,6 +20,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class CinemaViewModel extends ViewModel {
+    public MutableLiveData<Resource<List<Cinema>>> listAllCinema = new MutableLiveData<>();
+
     private MutableLiveData<List<Cinema>> listCinema = new MutableLiveData<>();
     public LiveData<List<Cinema>> _listCinema = listCinema;
     private MutableLiveData<String> cityLiveData = new MutableLiveData<>();
@@ -29,8 +31,7 @@ public class CinemaViewModel extends ViewModel {
     private MutableLiveData<String> cinemaLiveDate = new MutableLiveData<>();
     private MediatorLiveData<Resource<List<Showtimes>>> showTimes = new MediatorLiveData<>();
     private MutableLiveData<String> movieSelected = new MutableLiveData<>();
-
-
+    private CinemaRepository repository;
     public void setListCinema(List<Cinema> _list) {
         listCinema.postValue(_list);
 
@@ -49,7 +50,8 @@ public class CinemaViewModel extends ViewModel {
     }
 
     @Inject
-    public CinemaViewModel(CinemaRepository repository, ShowTimeRepository showTimeRepository) {
+    public CinemaViewModel(CinemaRepository _repository, ShowTimeRepository showTimeRepository) {
+        this.repository = _repository;
         cinemasInCityLiveData.addSource(cityLiveData, city -> {
             if (currentSource != null) {
                 cinemasInCityLiveData.removeSource(currentSource);
@@ -106,5 +108,14 @@ public class CinemaViewModel extends ViewModel {
 
     public void setCity(String city) {
         cityLiveData.setValue(city);
+    }
+    public  MutableLiveData<Resource<List<Cinema>>>  getAllCinema(int limit){
+        repository.getAllCinemas(limit).observeForever(resource ->{
+            if(resource.getData() != null)
+                listAllCinema.postValue(resource);
+        }
+       );
+        return  listAllCinema;
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Space;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +47,7 @@ public class OnBoarding extends AppCompatActivity {
             editor.putBoolean("isFirstTime", false);
             editor.apply();
 
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, Splash.class));
             finish();
         });
     }

@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface CinemaRepository {
     LiveData<Resource<List<Cinema>>> getCinemas( String selectedCity);
+    LiveData<Resource<List<Cinema>>> getAllCinemas(int limit);
+
 
 }

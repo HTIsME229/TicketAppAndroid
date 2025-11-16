@@ -1,5 +1,7 @@
 package com.example.ticketapp.domain.model;
 
+import com.example.ticketapp.domain.model.Res.FirestoreTimestamp;
+
 import java.util.List;
 
 public class Movie {

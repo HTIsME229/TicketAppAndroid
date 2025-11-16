@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +41,10 @@ public class SettingsFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthenticationActivity.class));
             getActivity().finish();
 
+        });
+        binding.myTicket.setOnClickListener(v->{
+            NavController navController = NavHostFragment.findNavController(SettingsFragment.this);
+            navController.navigate(SettingsFragmentDirections.actionNavSettingsToMyTicket());
         });
     }
 }

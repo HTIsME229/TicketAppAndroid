@@ -23,12 +23,15 @@ import com.example.ticketapp.R;
 import com.example.ticketapp.adapter.SeatAdapter;
 import com.example.ticketapp.databinding.FragmentSelectSeatBinding;
 import com.example.ticketapp.domain.model.Cinema;
+import com.example.ticketapp.domain.model.Res.BookingData;
 import com.example.ticketapp.domain.model.Room;
 import com.example.ticketapp.domain.model.Seat;
 import com.example.ticketapp.domain.model.Showtimes; // Đảm bảo bạn đã import Showtimes
 import com.example.ticketapp.utils.Resource;
+import com.example.ticketapp.viewmodel.BookingViewModel;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
 import com.example.ticketapp.viewmodel.MovieViewModel;
+import com.example.ticketapp.viewmodel.ProfileViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,11 +46,16 @@ public class SelectSeatFragment extends Fragment {
     private MovieViewModel movieViewModel;
     private SeatAdapter seatAdapter;
     private RecyclerView recyclerViewSeats;
+    private ProfileViewModel profileViewModel;
+    private BookingViewModel bookingViewModel;
+    private Showtimes selectedShowtime;
     private int selectedCinemaPosition = AdapterView.INVALID_POSITION;
     private List<Cinema> currentCinemaList = new ArrayList<>();
     private List<Showtimes> currentShowtimeList = new ArrayList<>();
     private String date;
     private String selectedCity;
+    private List<String> selectdSeats = new ArrayList<>();
+    private BookingData bookingData = new BookingData();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,14 +70,23 @@ public class SelectSeatFragment extends Fragment {
         // Khởi tạo ViewModel trước
         cinemaViewModel = new ViewModelProvider(requireActivity()).get(CinemaViewModel.class);
         movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
+        profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        bookingViewModel = new ViewModelProvider(requireActivity()).get(BookingViewModel.class);
         seatAdapter = new SeatAdapter((seat, position) -> {
-
+            selectdSeats.add(seat.getSeatId());
         });
         recyclerViewSeats = binding.recyclerViewSeats;
         recyclerViewSeats.setAdapter(seatAdapter);
-        binding.buttonCheckout.setOnClickListener(view1 ->{
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(SelectSeatFragmentDirections.actionSelectSeatFragmentToPaymentMethod());});
+        binding.buttonCheckout.setOnClickListener(view1 -> {
+            bookingData.setShowTimeId(selectedShowtime.getUid());
+            if (!selectdSeats.isEmpty() && bookingData.getUserId() != null && selectedShowtime != null) {
+                bookingData.setSelectedSeats(selectdSeats);
+                bookingData.setShowTimeId(selectedShowtime.getUid());
+                bookingViewModel.setBookingData(bookingData);
+                NavController navController = NavHostFragment.findNavController(SelectSeatFragment.this);
+                navController.navigate(R.id.action_selectSeatFragment_to_paymentMethod);
+            }
+        });
         // Setup các Observers
         setUpViewModelObservers();
         // Setup các Views
@@ -80,6 +97,14 @@ public class SelectSeatFragment extends Fragment {
     }
 
     private void setUpViewModelObservers() {
+        profileViewModel.getUserProfile().observe(getViewLifecycleOwner(), account -> {
+            if (account.getUid() != null) {
+                bookingData.setUserId(account.getUid());
+            }
+
+        });
+
+
         // Lấy phim đã chọn (từ màn hình trước)
         movieViewModel.selectedMovie.observe(getViewLifecycleOwner(), movie -> {
             if (movie != null) {
@@ -95,7 +120,7 @@ public class SelectSeatFragment extends Fragment {
                 return;
             }
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
-                if(resource.getData().isEmpty()){
+                if (resource.getData().isEmpty()) {
                     updateCinemaSpinner(new ArrayList<>());
                     updateShowtimeSpinner(new ArrayList<>());
                 }
@@ -152,17 +177,28 @@ public class SelectSeatFragment extends Fragment {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, month);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel(); // Cập nhật label VÀ kích hoạt ViewModel
+            updateLabel();
         };
+
         binding.textViewDate.setOnClickListener(v -> {
-            new DatePickerDialog(requireContext(), dateSetListener,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), dateSetListener,
                     myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-        });
-        updateLabel(); // Gọi lần đầu để set ngày hiện tại
-    }
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
 
+            // 🔥 SỬA ĐỔI: Lấy thời điểm hiện tại chính xác (System Time / NOW)
+            // Không đặt lại giờ, phút, giây về 00:00:00 nữa.
+            Calendar today = Calendar.getInstance();
+
+            // ÁP DỤNG GIỚI HẠN TỐI THIỂU
+            // Lấy milliseconds chính xác của thời điểm hiện tại (NOW)
+            datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+
+            datePickerDialog.show();
+        });
+
+        updateLabel();
+    }
     private void updateLabel() {
         seatAdapter.setSeats(new ArrayList<>());
         // Sửa 2: Lỗi định dạng 'DD'
@@ -235,7 +271,7 @@ public class SelectSeatFragment extends Fragment {
                         selectedCinemaPosition < currentCinemaList.size()) {
 
                     // 1. Lấy Suất chiếu và Rạp phim
-                    Showtimes selectedShowtime = currentShowtimeList.get(position);
+                    selectedShowtime = currentShowtimeList.get(position);
                     Cinema selectedCinema = currentCinemaList.get(selectedCinemaPosition);
 
                     // 2. Tìm thông tin phòng chiếu (Room)

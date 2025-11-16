@@ -14,12 +14,12 @@
         android:id="@+id/nav_discovery"
         android:icon="@drawable/discovery"
 
-        android:title="@string/txt_cinema"
+        android:title="@string/txt_explore"
       />
     <item
         android:id="@+id/nav_bookmark"
         android:icon="@drawable/bookmark"
-        android:title="@string/txt_ticket"
+        android:title="@string/saved_plan"
          />
     <item
         android:id="@+id/nav_settings"

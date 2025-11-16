@@ -1,4 +1,4 @@
-package com.example.ticketapp.view;
+package com.example.ticketapp.view.Movie;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ticketapp.R;
 import com.example.ticketapp.databinding.FragmentDetailsBinding;
 import com.example.ticketapp.domain.model.Movie;
@@ -72,6 +73,10 @@ public class DetailsFragment extends Fragment {
         binding.tvRating.setText(String.valueOf(movie.getRating()));
         binding.tvDutation.setText(Format.formatDuration(Integer.parseInt(movie.getDuration())));
         binding.tvSynopsis.setText(movie.getSynopsis());
+        Glide.with(requireContext())
+                .load(movie.getPosterUrl())
+                .error(R.drawable.ic_launcher_background)
+                .into(binding.imgPoster);
 
 
     }

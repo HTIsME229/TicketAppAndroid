@@ -52,7 +52,9 @@ setUpViewModel();
                     result -> {
                         Log.d("LoginResult", "Login result: " + result.getMessage());
                         if (result.isSuccess()) {
+                            profileViewModel.setUserProfile(result.getUser());
                             startActivity(new Intent(getActivity(), MainActivity.class));
+
                             getActivity().finish(); // Optional: finish the current activity
                         } else {
                             binding.edtPassword.setError("Email or Password is incorrect");

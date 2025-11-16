@@ -1,4 +1,4 @@
-package com.example.ticketapp.domain.model;
+package com.example.ticketapp.domain.model.Res;
 
 import java.util.Date;
 

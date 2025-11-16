@@ -1,123 +1,187 @@
-    package com.example.ticketapp.view;
+package com.example.ticketapp.view;
 
-    import android.os.Bundle;
 
-    import androidx.annotation.NonNull;
-    import androidx.annotation.Nullable;
-    import androidx.fragment.app.Fragment;
-    import androidx.lifecycle.ViewModelProvider;
-    import androidx.navigation.NavController;
-    import androidx.navigation.Navigation;
-    import androidx.navigation.fragment.NavHostFragment;
-    import androidx.recyclerview.widget.RecyclerView;
+import android.os.Bundle;
 
-    import android.view.LayoutInflater;
-    import android.view.View;
-    import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-    import com.example.ticketapp.adapter.CinemaAdapter;
-    import com.example.ticketapp.adapter.MovieAdapter;
-    import com.example.ticketapp.databinding.FragmentHomeBinding;
-    import com.example.ticketapp.viewmodel.CinemaViewModel;
-    import com.example.ticketapp.viewmodel.MovieViewModel;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-    import dagger.hilt.android.AndroidEntryPoint;
+import com.example.ticketapp.adapter.CinemaAdapter;
+import com.example.ticketapp.adapter.MovieTabAdapter; // Adapter mới
+import com.example.ticketapp.databinding.FragmentHomeBinding;
+import com.example.ticketapp.domain.model.Movie;
+import com.example.ticketapp.view.Movie.MovieListFragment;
+import com.example.ticketapp.viewmodel.CinemaViewModel;
+import com.example.ticketapp.viewmodel.MovieViewModel;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-    @AndroidEntryPoint
-    public class HomeFragment extends Fragment {
-        private FragmentHomeBinding binding;
-        private RecyclerView listMovieSoon;
-        private RecyclerView listCinema;
-        private CinemaViewModel cinemaViewModel;
-        private MovieViewModel movieViewModel;
-        private MovieAdapter movieAdapter;
-        private CinemaAdapter cinemaAdapter;
+import dagger.hilt.android.AndroidEntryPoint;
 
-        private void setUpAdater() {
-            movieAdapter = new MovieAdapter(
-            );
+import java.util.Arrays;
+import java.util.List;
 
-            cinemaAdapter = new CinemaAdapter();
-            listCinema.setAdapter(cinemaAdapter);
-            listMovieSoon.setAdapter(movieAdapter);
-        }
+@AndroidEntryPoint
+public class HomeFragment extends Fragment implements MovieListFragment.OnMovieSelectListener {
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            binding = FragmentHomeBinding.inflate(inflater, container, false);
-            initView();
-            setUpAdater();
-            setUpViewModel();
+    private FragmentHomeBinding binding;
+    private MovieViewModel movieViewModel;
+    private TabLayoutMediator tabLayoutMediator;
+    private MovieTabAdapter movieTabAdapter; // Adapter mới
+    private CinemaViewModel cinemaViewModel;
+    private RecyclerView cinemaRecyclerView;
+    private CinemaAdapter cinemaAdapter;
 
-            setUpSwipeRefresh();
-            return binding.getRoot();
-        }
+    private final List<String> tabTitles = Arrays.asList("Đang chiếu", "Sắp chiếu");
 
-        @Override
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            NavController navController = NavHostFragment.findNavController(this);
-            setUpNavigation(navController);
-        }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        setupViewModel();
+        setupSwipeRefresh();
+        return binding.getRoot();
+    }
 
-        private void setUpNavigation(NavController navController) {
-         movieAdapter.setOnItemClickListener(movie -> {
-             movieViewModel.setSelectMovie(movie);
-             navController.navigate(
-                     HomeFragmentDirections.actionNavHomeToDetailsFragment()
-             );
-         });
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        hideToolbar();
+        cinemaAdapter = new CinemaAdapter();
+        cinemaRecyclerView = binding.rvCinemas;
+        cinemaRecyclerView.setAdapter(cinemaAdapter);
+        setupMovieTabsViewPager(); // Hợp nhất logic setup vào đây
+    }
 
-        }
 
-        private void setUpSwipeRefresh() {
-            binding.swipeRefreshLayout.setColorSchemeResources(
-                    android.R.color.holo_blue_bright,
-                    android.R.color.holo_green_light,
-                    android.R.color.holo_orange_light,
-                    android.R.color.holo_red_light
-            );
-            binding.swipeRefreshLayout.setOnRefreshListener(this::refreshData);
-        }
-
-        private void refreshData() {
-            movieViewModel.getMovies();
-
-        }
-
-        private void initView() {
-            listMovieSoon = binding.rvComingSoon;
-            listCinema = binding.rvCinemas;
-        }
-
-        private void setUpViewModel() {
-            cinemaViewModel = new ViewModelProvider(requireActivity()).get(CinemaViewModel.class);
-            movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
-            cinemaViewModel._listCinema.observe(getViewLifecycleOwner(), listCinema -> {
-                cinemaAdapter.updateListCinema(listCinema);
-
-            });
-            movieViewModel.movies.observe(getViewLifecycleOwner(), resource -> {
-                switch (resource.getStatus()) {
-                    case LOADING:
-                        binding.swipeRefreshLayout.setRefreshing(true);
-                        break;
-                    case SUCCESS:
-                        binding.swipeRefreshLayout.setRefreshing(false);
-                        if (resource.getData() != null) {
-                            movieAdapter.updateListMovie(resource.getData());
-                        }
-                        break;
-                    case ERROR:
-                        binding.swipeRefreshLayout.setRefreshing(false);
-                        break;
+    private void setupMovieTabsViewPager() {
+        // 1. Khởi tạo Adapter (FragmentStateAdapter)
+        movieTabAdapter = new MovieTabAdapter(this);
+        // 2. Gán Adapter cho ViewPager2
+        binding.vpMovieSlider.setAdapter(movieTabAdapter);
+        binding.vpMovieSlider.setUserInputEnabled(false);
+        binding.vpMovieSlider.setPageTransformer(null);
+        // 4. Liên kết TabLayout với ViewPager2
+        tabLayoutMediator = new TabLayoutMediator(
+                binding.tabMovieFilter,
+                binding.vpMovieSlider,
+                (tab, position) -> {
+                    // Gán tiêu đề tab
+                    tab.setText(tabTitles.get(position));
                 }
-            });
-          if(movieViewModel.movies.getValue()== null){
-              movieViewModel.getMovies();
-          }
-        }
+        );
+        tabLayoutMediator.attach();
 
+        // Đặt tab mặc định
+        binding.vpMovieSlider.setCurrentItem(0, false);
+    }
+
+    // ... (refreshData, setupSwipeRefresh giữ nguyên) ...
+
+    private void setupViewModel() {
+        // Lấy ViewModel (cần thiết cho các Fragment con để lấy dữ liệu)
+        movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
+        cinemaViewModel = new ViewModelProvider(requireActivity()).get(CinemaViewModel.class);
+
+        // Observer cho danh sách phim tổng thể
+        movieViewModel.movies.observe(getViewLifecycleOwner(), resource -> {
+            switch (resource.getStatus()) {
+                case LOADING:
+                    binding.swipeRefreshLayout.setRefreshing(true);
+                    break;
+                case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                    break;
+                case ERROR:
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                    break;
+            }
+        });
+        cinemaViewModel.getAllCinema(5).observe(getViewLifecycleOwner(),resource->{
+            switch (resource.getStatus()) {
+                case LOADING:
+                    binding.swipeRefreshLayout.setRefreshing(true);
+                    break;
+                case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                    cinemaAdapter.updateListCinema(resource.getData());
+
+                    break;
+                case ERROR:
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                    break;
+            }
+        });
+
+        // Tải dữ liệu lần đầu tiên (nếu chưa có)
+        if (movieViewModel.movies.getValue() == null) {
+            movieViewModel.getMovies();
+        }
+    }
+
+    private void hideToolbar() {
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            // Lấy SupportActionBar và ẩn nó
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().hide();
+            }
+        }
+    }
+
+    private void showToolbar() {
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().show();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showToolbar();
+        if (tabLayoutMediator != null) {
+            tabLayoutMediator.detach();
+        }
+        binding = null;
+    }
+
+    private void refreshData() {
+        movieViewModel.getMovies();
 
     }
+
+    private void setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+        binding.swipeRefreshLayout.setOnRefreshListener(this::refreshData);
+    }
+
+    @Override
+    public void onMovieSelect(Movie movie) {
+        if (movie != null) {
+            movieViewModel.setSelectMovie(movie);
+            NavController navController = NavHostFragment.findNavController(HomeFragment.this);
+            navController.navigate(HomeFragmentDirections.actionNavHomeToDetailsFragment());
+        }
+    }
+}
+
+
+
+
