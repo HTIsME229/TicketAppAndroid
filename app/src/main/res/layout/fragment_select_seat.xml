@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="@string/txt_date"
                 android:textColor="#AEAEAE"
                 android:textSize="14sp" />
 
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="City"
+                android:text="@string/txt_city"
                 android:textColor="#AEAEAE"
                 android:dropDownHeight="40dp"
                 android:textSize="14sp" />
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cinema"
+                android:text="@string/txt_cinema_label"
                 android:textColor="#AEAEAE"
                 android:textSize="14sp" />
 
@@ -123,7 +123,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Showtime"
+                android:text="@string/txt_showtime"
                 android:textColor="#AEAEAE"
                 android:textSize="14sp" />
 
@@ -189,7 +189,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Checkout"
+        android:text="@string/txt_checkout"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:textStyle="bold"

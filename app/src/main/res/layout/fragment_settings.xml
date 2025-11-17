@@ -47,14 +47,14 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Miles Morales"
+                    android:text="@string/txt_miles_morales"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@android:color/white"/>
 
                 <TextView
                     android:id="@+id/tvRole"
-                    android:text="Film Hunter"
+                    android:text="@string/txt_film_hunter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Account"
+            android:text="@string/txt_account"
             android:textColor="@android:color/darker_gray"
             android:textStyle="bold"
             android:paddingTop="16dp"
@@ -78,7 +78,7 @@
                 style="@style/SettingIconStyle"/>
 
             <TextView
-                android:text="Personal Data"
+                android:text="@string/txt_personal_data"
                 style="@style/SettingTextStyle"/>
         </LinearLayout>
 
@@ -102,7 +102,29 @@
                 style="@style/SettingIconStyle"/>
 
             <TextView
-                android:text="Deactivate Account"
+                android:text="@string/txt_deactivate_account"
+                style="@style/SettingTextStyle"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_app_settings"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/languageSettings"
+            style="@style/SettingItemStyle">
+
+            <ImageView
+                android:src="@drawable/ic_notification"
+                style="@style/SettingIconStyle"/>
+
+            <TextView
+                android:text="@string/txt_language"
                 style="@style/SettingTextStyle"/>
         </LinearLayout>
 
@@ -123,7 +145,7 @@
                 style="@style/SettingIconStyle"/>
 
             <TextView
-                android:text="Notification"
+                android:text="@string/txt_notification"
                 style="@style/SettingTextStyle"/>
         </LinearLayout>
 
@@ -136,7 +158,7 @@
                 style="@style/SettingIconStyle"/>
 
             <TextView
-                android:text="Your Ticket"
+                android:text="@string/txt_your_ticket"
                 style="@style/SettingTextStyle"/>
         </LinearLayout>
 
@@ -148,7 +170,7 @@
             style="@style/SettingIconStyle"/>
 
             <TextView
-                android:text="Logout"
+                android:text="@string/txt_logout"
                 style="@style/SettingTextStyle"/>
         </LinearLayout>
 

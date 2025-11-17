@@ -35,7 +35,7 @@
         android:id="@+id/textEmptyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hiện tại chưa có phim nào trong mục này."
+        android:text="@string/msg_no_movies"
         android:visibility="gone"
         android:textColor="#888888"
         android:textSize="16sp"

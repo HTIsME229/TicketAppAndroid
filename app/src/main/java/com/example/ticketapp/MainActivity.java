@@ -1,5 +1,6 @@
     package com.example.ticketapp;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +15,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.ticketapp.databinding.ActivityMainBinding;
+import com.example.ticketapp.utils.LocaleHelper;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private  AppBarConfiguration appBarConfiguration;
+    private AppBarConfiguration appBarConfiguration;
+    
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getPersistedLanguage(newBase)));
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

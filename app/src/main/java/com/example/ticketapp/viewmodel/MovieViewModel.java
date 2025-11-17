@@ -22,8 +22,6 @@ public class MovieViewModel extends ViewModel {
     public LiveData<Resource<List<Movie>>> movies = _movies;
     private final MutableLiveData<Movie> _selectedMovie = new MutableLiveData<>();
     public LiveData<Movie> selectedMovie = _selectedMovie;
-
-
     @Inject
     public MovieViewModel(MovieRepository repository) {
         this.repository = repository;

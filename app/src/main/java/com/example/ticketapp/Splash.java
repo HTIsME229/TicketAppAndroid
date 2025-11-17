@@ -1,5 +1,6 @@
 package com.example.ticketapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.ticketapp.databinding.ActivitySplashBinding;
+import com.example.ticketapp.utils.LocaleHelper;
 import com.example.ticketapp.utils.Resource;
 import com.example.ticketapp.view.LoginFragment;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
@@ -27,8 +29,13 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class Splash extends AppCompatActivity {
-        private ProfileViewModel profileViewModel;
+    private ProfileViewModel profileViewModel;
     private ActivitySplashBinding binding;
+    
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getPersistedLanguage(newBase)));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Create Your Account"
+        android:text="@string/txt_create_account"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -48,7 +48,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         app:boxStrokeColor="@color/light_blue"
-        android:hint="Username"
+        android:hint="@string/hint_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
@@ -76,7 +76,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-        android:hint="Email"
+        android:hint="@string/hint_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:hintTextColor="@color/white"
@@ -105,7 +105,7 @@
         app:hintTextColor="@color/white"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-        android:hint="Password"
+        android:hint="@string/hint_password"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/light_blue"
         app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-        android:hint="Confirm Password"
+        android:hint="@string/hint_confirm_password"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/light_blue"
         app:hintTextColor="@color/white"
@@ -163,7 +163,7 @@ android:textColorHint="@color/white"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Sign Up"
+        android:text="@string/txt_sign_up"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textStyle="bold"
@@ -181,7 +181,7 @@ android:textColorHint="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="or continue with"
+        android:text="@string/txt_or_continue_with"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +206,7 @@ android:textColorHint="@color/white"
 
             android:background="@color/transparent"
 
-            android:contentDescription="Facebook"
+            android:contentDescription="@string/content_desc_facebook"
             android:src="@drawable/ic_facebook" />
 
         <Space
@@ -218,7 +218,7 @@ android:textColorHint="@color/white"
             android:layout_height="48dp"
             android:background="@color/transparent"
 
-            android:contentDescription="Google"
+            android:contentDescription="@string/content_desc_google"
             android:src="@drawable/ic_google" />
 
         <Space
@@ -231,7 +231,7 @@ android:textColorHint="@color/white"
 
    android:background="@color/transparent"
 
-            android:contentDescription="Apple"
+            android:contentDescription="@string/content_desc_apple"
             android:src="@drawable/ic_apple" />
     </LinearLayout>
 

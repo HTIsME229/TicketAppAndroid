@@ -98,7 +98,7 @@ public class PaymentMethod extends Fragment {
                     }
                 });
             } else {
-                Toast.makeText(requireContext(), "Booking data is missing", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.msg_booking_missing), Toast.LENGTH_SHORT).show();
             }
         });
     }

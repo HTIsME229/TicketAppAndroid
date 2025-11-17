@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Movie Title"
+        android:text="@string/txt_movie_title"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/img_movie_poster"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="★★★★☆"
+        android:text="@string/txt_rating_sample"
         android:textColor="#FFFF00"
         app:layout_constraintStart_toStartOf="@id/img_movie_poster"
         app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />

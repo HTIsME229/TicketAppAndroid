@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Payment Method"
+        android:text="@string/txt_payment_method"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:text="Change"
+        android:text="@string/txt_change"
         android:textColor="#4A80F0"
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@id/label_payment_method"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Payment Details"
+        android:text="@string/txt_payment_details"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Email"
+                android:text="@string/txt_your_email"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_email"
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cardholder Name"
+                android:text="@string/txt_cardholder_name"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_cardholder"
@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Card Number"
+                android:text="@string/txt_card_number_label"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_card_number"
@@ -131,7 +131,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="@string/txt_date_label"
                         style="@style/CheckoutLabelStyle" />
                     <Spinner
                         android:id="@+id/spinner_date"
@@ -152,7 +152,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CVV"
+                        android:text="@string/txt_cvv_label"
                         style="@style/CheckoutLabelStyle" />
                     <EditText
                         android:id="@+id/edit_cvv"
@@ -186,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Pay Now"
+            android:text="@string/txt_pay_now"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Action"
+                    android:text="@string/txt_action"
                     android:textColor="#6C9EE5"
                     android:textSize="12sp"
                     android:layout_marginBottom="4dp" />
@@ -57,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Time To Die"
+                    android:text="@string/txt_no_time_to_die"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -66,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2h 43m"
+                    android:text="@string/txt_duration_sample"
                     android:textColor="#8A8A8A"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5,0"
+                    android:text="@string/txt_rating_value_sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -96,7 +96,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cinema"
+            android:text="@string/txt_cinema_label"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
@@ -128,7 +128,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date"
+                    android:text="@string/txt_date"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Time"
+                    android:text="@string/txt_time"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
@@ -184,7 +184,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Seats"
+                    android:text="@string/txt_seats"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
@@ -208,7 +208,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Person"
+                    android:text="@string/txt_person"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginBottom="8dp" />
@@ -260,7 +260,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="56dp"
-                android:text="Checkout"
+                android:text="@string/txt_checkout"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -352,7 +352,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5,0"
+                    android:text="@string/txt_rating_value_sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>

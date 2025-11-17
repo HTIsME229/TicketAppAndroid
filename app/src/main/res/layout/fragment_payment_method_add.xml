@@ -15,7 +15,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Save Card"
+        android:text="@string/txt_save_card"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -46,38 +46,38 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Email"
+                android:text="@string/txt_your_email"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:hint="example@gmail.com"
+                android:hint="@string/hint_email_example"
                 style="@style/CheckoutEditTextStyle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cardholder Name"
+                android:text="@string/txt_cardholder_name"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_cardholder"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:hint="Full Name on Card"
+                android:hint="@string/hint_full_name_card"
                 style="@style/CheckoutEditTextStyle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Card Number"
+                android:text="@string/txt_card_number_label"
                 style="@style/CheckoutLabelStyle" />
             <EditText
                 android:id="@+id/edit_card_number"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:inputType="numberPassword"
-                android:hint="**** **** **** ****"
+                android:hint="@string/hint_card_number"
                 style="@style/CheckoutEditTextStyle" />
 
             <LinearLayout
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="@string/txt_date_label"
                         style="@style/CheckoutLabelStyle" />
                     <Spinner
                         android:id="@+id/spinner_date"
@@ -115,7 +115,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CVV"
+                        android:text="@string/txt_cvv_label"
                         style="@style/CheckoutLabelStyle" />
                     <EditText
                         android:id="@+id/edit_cvv"
@@ -123,7 +123,7 @@
                         android:layout_height="56dp"
                         android:inputType="numberPassword"
                         android:maxLength="3"
-                        android:hint="123"
+                        android:hint="@string/hint_cvv"
                         style="@style/CheckoutEditTextStyle" />
                 </LinearLayout>
             </LinearLayout>
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Set as default payment method"
+                android:text="@string/txt_set_default_payment"
                 android:textColor="#AEAEAE"
                 app:buttonTint="#4A80F0" />
 
