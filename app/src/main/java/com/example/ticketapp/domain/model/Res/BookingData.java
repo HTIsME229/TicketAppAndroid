@@ -2,6 +2,7 @@ package com.example.ticketapp.domain.model.Res;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingData {
@@ -11,6 +12,10 @@ public class BookingData {
 
     public String getShowTimeId() {
         return showtimeId;
+    }
+      public void clearData(){
+        showtimeId = "";
+        selectedSeats = new ArrayList<>();
     }
 
     public void setShowTimeId(String showTimeId) {

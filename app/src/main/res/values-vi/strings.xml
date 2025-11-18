@@ -216,7 +216,12 @@
     <string name="txt_note_location">Vui lòng bật dịch vụ định vị</string>
     <string name="welcome_back">Chào mừng trở lại,</string>
     <string name="cinema_near_you">Rạp Chiếu Phim Gần Bạn</string>
-
+    <string name="btn_book_ticket">Đặt Vé</string>
+    <string name="txt_read_more">Đọc Thêm</string>
+    <string name="txt_instruction">Hướng Dẫn</string>
+    <string name="content_instruction">Đến rạp chiếu phim, xuất trình và quét mã vạch vào khu vực được chỉ định. Tiếp tục tuân thủ các quy tắc về sức khỏe.</string>
+    <string name="txt_download_e_ticket">Tải E-Ticket</string>
+    <string name="txt_content_welcome">Trải Nghiệm Rạp Chiếu Phim Của Bạn</string>
     <!-- Danh Sách Thành Phố -->
     <string-array name="cities_array">
         <item>An Giang</item>
