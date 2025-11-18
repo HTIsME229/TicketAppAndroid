@@ -83,6 +83,7 @@ public class PaymentMethod extends Fragment {
                                         resource.getData().getTotalPrice())
                                         ;
                                 bookingViewModel.setCurrentTicket(ticket);
+                                bookingViewModel.clearBookingData();
                                 NavController navController = NavHostFragment.findNavController(this);
                                 navController.navigate(PaymentMethodDirections.actionPaymentMethodToPaymentSuccessDialog2());
 //                        showSuccessMessage(result);

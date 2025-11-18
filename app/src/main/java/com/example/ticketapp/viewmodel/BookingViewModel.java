@@ -86,5 +86,10 @@ public class BookingViewModel extends ViewModel {
           return bookingRepository.bookingTicket(bookingData);
 
     }
+    // Trong BookingViewModel.java
+    public void clearBookingData() {
+        bookingDataMutableLiveData.setValue(null);
+
+    }
 
 }

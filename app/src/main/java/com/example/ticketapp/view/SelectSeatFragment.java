@@ -83,7 +83,7 @@ public class SelectSeatFragment extends Fragment {
                 bookingData.setSelectedSeats(selectdSeats);
                 bookingData.setShowTimeId(selectedShowtime.getUid());
                 bookingViewModel.setBookingData(bookingData);
-                selectdSeats.clear();
+
                 NavController navController = NavHostFragment.findNavController(SelectSeatFragment.this);
                 navController.navigate(R.id.action_selectSeatFragment_to_paymentMethod);
             }
@@ -97,6 +97,21 @@ public class SelectSeatFragment extends Fragment {
         setUpShowtimeChoice();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectdSeats.clear();
+        if (seatAdapter != null) {
+            seatAdapter.setSeats(new ArrayList<>());
+        }
+        bookingData = new BookingData();
+        profileViewModel.getUserProfile().getValue();
+
+        if (binding != null) {
+            updateLabel();
+        }
+    }
     private void setUpViewModelObservers() {
         profileViewModel.getUserProfile().observe(getViewLifecycleOwner(), account -> {
             if (account.getUid() != null) {
