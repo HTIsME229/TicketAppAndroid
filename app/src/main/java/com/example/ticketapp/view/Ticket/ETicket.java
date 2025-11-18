@@ -11,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ticketapp.R;
 import com.example.ticketapp.databinding.FragmentETicketBinding;
 import com.example.ticketapp.domain.model.Ticket;
 import com.example.ticketapp.viewmodel.BookingViewModel;
+
+import java.util.Locale;
 
 
 public class ETicket extends Fragment {
@@ -44,11 +47,20 @@ public class ETicket extends Fragment {
     }
 
     private void initView(Ticket ticket) {
+        binding.detailDate.labelDetail.setText(getString(R.string.txt_time));
         binding.textFilmTitle.setText(ticket.getMovieName());
+        binding.detailLocation.labelDetail.setText(getString(R.string.txt_cinema));
         binding.detailLocation.textDetailValue.setText(ticket.getCinemaName());
+        binding.detailOrder.labelDetail.setText(getString(R.string.txt_ticket_id));
         binding.detailOrder.textDetailValue.setText(ticket.getId());
         binding.detailDate.textDetailValue.setText(ticket.getTime());
+        binding.detailPayment.labelDetail.setText(getString(R.string.txt_status));
         binding.detailPayment.textDetailValue.setText(ticket.getStatus());
+        binding.detailPrice.labelDetail.setText(getString(R.string.txt_price));
+        String formattedPrice = String.format(Locale.getDefault(), "%,d đ",
+                (int) ticket.getTotalPrice());
+        binding.detailPrice.textDetailValue.setText(formattedPrice);
+        binding.detailSeats.labelDetail.setText(getString(R.string.txt_seats));
         binding.detailSeats.textDetailValue.setText(ticket.getSeatNames().toString());
     }
 }

@@ -19,12 +19,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class ProfileViewModel extends ViewModel {
     private final AccountRepository accountRepository;
-    private MutableLiveData<Account> userData = new MutableLiveData<>();
-    public  LiveData<Account> _userData = userData;
+    public  MutableLiveData<Account> _userData ;
 
     @Inject
-    public ProfileViewModel(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public ProfileViewModel(AccountRepository _accountRepository) {
+        this.accountRepository = _accountRepository;
+        _userData = accountRepository.getCurrentUser();
+
     }
 
 
@@ -38,21 +39,15 @@ return         accountRepository.register(name, email, password);
 
 
 
-
     }
     public LiveData<Account> getUserProfile() {
-        loadUserProfile();
-        return userData;
+        return _userData;
     }
     public void setUserProfile(Account userProfile) {
         accountRepository.setCurrentUser(userProfile);
-        loadUserProfile();
     }
 
-    public void loadUserProfile() {
-        LiveData<Account> user = accountRepository.getCurrentUser();
-        userData.setValue(user.getValue());
-    }
+
     public LiveData<Resource<Account>> geUserById(){
          return accountRepository.getUserData();
     }

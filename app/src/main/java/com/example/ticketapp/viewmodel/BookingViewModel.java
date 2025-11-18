@@ -89,7 +89,21 @@ public class BookingViewModel extends ViewModel {
     // Trong BookingViewModel.java
     public void clearBookingData() {
         bookingDataMutableLiveData.setValue(null);
+    }
+    
 
+    public void refreshUpcomingTickets() {
+        Account user = userProfileLiveData.getValue();
+        if (user != null && user.getUid() != null) {
+            fetchTicketsByUid(user.getUid(), "upcoming");
+        }
+    }
+
+    public void refreshWatchedTickets() {
+        Account user = userProfileLiveData.getValue();
+        if (user != null && user.getUid() != null) {
+            fetchTicketsByUid(user.getUid(), "watched");
+        }
     }
 
 }

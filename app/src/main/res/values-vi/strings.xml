@@ -125,6 +125,20 @@
     <string name="txt_subtotal">Tạm Tính</string>
     <string name="txt_tax">Thuế</string>
     <string name="txt_discount">Giảm Giá</string>
+    <string name="txt_ok">OK</string>
+    <string name="txt_yes">Có</string>
+    <string name="txt_no">Không</string>
+    
+    <!-- Thông Báo Dialog -->
+    <string name="msg_loading">Đang tải, vui lòng đợi...</string>
+    <string name="msg_loading_data">Đang tải dữ liệu...</string>
+    <string name="msg_processing">Đang xử lý...</string>
+    <string name="msg_please_wait">Vui lòng đợi...</string>
+    <string name="msg_operation_success">Thao tác hoàn tất thành công</string>
+    <string name="msg_operation_failed">Thao tác thất bại</string>
+    <string name="msg_network_error">Lỗi mạng. Vui lòng kiểm tra kết nối.</string>
+    <string name="msg_unknown_error">Đã xảy ra lỗi không xác định</string>
+    <string name="msg_confirm_action">Bạn có chắc chắn muốn tiếp tục?</string>
     
     <!-- Thanh Toán Thành Công -->
     <string name="txt_payment_success">Thanh Toán Thành Công!</string>
@@ -222,6 +236,9 @@
     <string name="content_instruction">Đến rạp chiếu phim, xuất trình và quét mã vạch vào khu vực được chỉ định. Tiếp tục tuân thủ các quy tắc về sức khỏe.</string>
     <string name="txt_download_e_ticket">Tải E-Ticket</string>
     <string name="txt_content_welcome">Trải Nghiệm Rạp Chiếu Phim Của Bạn</string>
+    <string name="txt_status">Trạng thái </string>
+    <string name="txt_price">Giá</string>
+
     <!-- Danh Sách Thành Phố -->
     <string-array name="cities_array">
         <item>An Giang</item>

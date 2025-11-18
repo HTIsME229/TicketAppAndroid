@@ -47,6 +47,7 @@ public class ExploreFragment extends Fragment {
         binding = FragmentExploreBinding.inflate(inflater, container, false);
         movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
         initView();
+        setupSwipeRefresh();
         setUpViewModel();
         return binding.getRoot();
     }
@@ -56,9 +57,10 @@ public class ExploreFragment extends Fragment {
             switch (movie.getStatus())
             {
                 case LOADING:
-
+                    binding.swipeRefreshLayout.setRefreshing(true);
                     break;
                 case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     List<Movie> upComingMovie  = movie.getData().stream().filter
                             (movie1 -> Objects.equals(movie1.getStatus(), "COMING_SOON"))
                             .collect(Collectors.toList());
@@ -67,16 +69,24 @@ public class ExploreFragment extends Fragment {
                             .collect(Collectors.toList());
                     nowShowingAdapter.updateListMovie(nowShowingMovie);
                     upComingAdapter.updateListMovie(upComingMovie);
-
                     break;
                 case ERROR:
-
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     break;
             }
-
-
         });
-
+    }
+    
+    private void setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        );
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            movieViewModel.getMovies();
+        });
     }
 
     private void initView() {

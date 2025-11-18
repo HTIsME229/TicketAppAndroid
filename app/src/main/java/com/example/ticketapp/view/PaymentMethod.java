@@ -22,6 +22,7 @@ import com.example.ticketapp.domain.model.PaymentCard;
 import com.example.ticketapp.domain.model.Res.BookingData;
 import com.example.ticketapp.domain.model.Res.BookingRes;
 import com.example.ticketapp.domain.model.Ticket;
+import com.example.ticketapp.utils.DialogHelper;
 import com.example.ticketapp.utils.Resource;
 import com.example.ticketapp.view.dialog.PaymentSuccessDialog;
 import com.example.ticketapp.viewmodel.BookingViewModel;
@@ -68,11 +69,10 @@ public class PaymentMethod extends Fragment {
                     if (resource != null) {
                         switch (resource.getStatus()) {
                             case LOADING:
-//                        showLoadingIndicator();
+                                DialogHelper.showLoadingDialog(requireContext(), getString(R.string.msg_processing));
                                 break;
                             case SUCCESS:
-                                // 2. Xử lý thành công
-//                        hideLoadingIndicator();
+                                DialogHelper.hideLoadingDialog();
                                 Ticket ticket = new Ticket(
                                         resource.getData().getMovieName(),
                                         resource.getData().getCinemaName(),
@@ -86,14 +86,13 @@ public class PaymentMethod extends Fragment {
                                 bookingViewModel.clearBookingData();
                                 NavController navController = NavHostFragment.findNavController(this);
                                 navController.navigate(PaymentMethodDirections.actionPaymentMethodToPaymentSuccessDialog2());
-//                        showSuccessMessage(result);
                                 break;
                             case ERROR:
-                                // 3. Xử lý lỗi
-//                        hideLoadingIndicator();
-                                String errorMessage = resource.getMessage();
-                                // Hiển thị thông báo lỗi
-//                        showErrorMessage(errorMessage);
+                                DialogHelper.hideLoadingDialog();
+                                String errorMessage = resource.getMessage() != null 
+                                    ? resource.getMessage() 
+                                    : getString(R.string.msg_operation_failed);
+                                DialogHelper.showErrorDialog(requireContext(), errorMessage);
                                 break;
                         }
                     }

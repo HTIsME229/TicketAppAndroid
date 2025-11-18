@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ticketapp.R; // Thay bằng package của bạn
 import com.example.ticketapp.domain.model.Seat; // Thay bằng package của bạn
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder> {
 
     private List<Seat> seatList = new ArrayList<>();
+    private Set<String> selectedSeatIds = new HashSet<>();
     private OnSeatClickListener seatClickListener;
 
     // Interface để gửi sự kiện click về Fragment
@@ -23,6 +26,12 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
 
     public SeatAdapter(OnSeatClickListener listener) {
         this.seatClickListener = listener;
+    }
+    
+    // Method để clear selected seats
+    public void clearSelectedSeats() {
+        selectedSeatIds.clear();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -66,14 +75,23 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
             // Tự động đổi màu dựa trên trạng thái
             if ("available".equals(seat.getStatus().toString())) {
                 seatCheckBox.setEnabled(true); // Cho phép bấm
-                seatCheckBox.setChecked(false); // Bỏ chọn (nếu đang được tái sử dụng)
+                // Set checked state dựa trên selectedSeatIds
+                seatCheckBox.setChecked(selectedSeatIds.contains(seat.getSeatId()));
             } else {
                 seatCheckBox.setEnabled(false); // Vô hiệu hóa (màu đỏ)
+                seatCheckBox.setChecked(false);
             }
 
             // Xử lý sự kiện click
             seatCheckBox.setOnClickListener(v -> {
                 if (seatClickListener != null) {
+                    // Toggle trong set
+                    if (selectedSeatIds.contains(seat.getSeatId())) {
+                        selectedSeatIds.remove(seat.getSeatId());
+                    } else {
+                        selectedSeatIds.add(seat.getSeatId());
+                    }
+                    // Notify Fragment
                     seatClickListener.onSeatClick(seat, position);
                 }
             });

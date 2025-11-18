@@ -115,7 +115,7 @@
                         layout="@layout/item_ticket_detail" />
 
                     <include
-                        android:id="@+id/detail_time"
+                        android:id="@+id/detail_price"
                         layout="@layout/item_ticket_detail" />
 
                     <include

@@ -125,6 +125,20 @@
     <string name="txt_subtotal">Subtotal</string>
     <string name="txt_tax">Tax</string>
     <string name="txt_discount">Discount</string>
+    <string name="txt_ok">OK</string>
+    <string name="txt_yes">Yes</string>
+    <string name="txt_no">No</string>
+    
+    <!-- Dialog Messages -->
+    <string name="msg_loading">Loading, please wait...</string>
+    <string name="msg_loading_data">Loading data...</string>
+    <string name="msg_processing">Processing...</string>
+    <string name="msg_please_wait">Please wait...</string>
+    <string name="msg_operation_success">Operation completed successfully</string>
+    <string name="msg_operation_failed">Operation failed</string>
+    <string name="msg_network_error">Network error. Please check your connection.</string>
+    <string name="msg_unknown_error">An unknown error occurred</string>
+    <string name="msg_confirm_action">Are you sure you want to proceed?</string>
     
     <!-- Payment Success -->
     <string name="txt_payment_success">Payment Successful!</string>
@@ -221,6 +235,8 @@
     <string name="content_instruction">Come to the cinema, show and scan the barcode to the space provided. Continue to comply with health protocols.</string>
     <string name="txt_download_e_ticket">Download E-Ticket</string>
     <string name="txt_content_welcome">Your Cinema Experience</string>
+    <string name="txt_status">Status</string>
+    <string name="txt_price">Price</string>
     <!-- Cities Array -->
     <string-array name="cities_array">
         <item>An Giang</item>

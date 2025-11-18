@@ -47,15 +47,20 @@ setUpViewModel();
                 binding.edtPassword.requestFocus();
                 return;
             }
-            profileViewModel.login(email,
-                    password).observe(getViewLifecycleOwner(),
+            profileViewModel.login(email, password).observe(getViewLifecycleOwner(),
                     result -> {
                         Log.d("LoginResult", "Login result: " + result.getMessage());
                         if (result.isSuccess()) {
-                            profileViewModel.setUserProfile(result.getUser());
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-
-                            getActivity().finish(); // Optional: finish the current activity
+                            // Load user data từ Firestore trước khi chuyển màn hình
+                            profileViewModel.geUserById().observe(getViewLifecycleOwner(), resource -> {
+                                if (resource != null && resource.getData() != null) {
+                                    // Set user profile vào ViewModel
+                                    profileViewModel.setUserProfile(resource.getData());
+                                    // Chuyển sang MainActivity
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                    getActivity().finish();
+                                }
+                            });
                         } else {
                             binding.edtPassword.setError("Email or Password is incorrect");
                             binding.edtPassword.requestFocus();

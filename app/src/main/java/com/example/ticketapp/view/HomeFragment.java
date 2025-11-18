@@ -23,6 +23,7 @@ import com.example.ticketapp.adapter.MovieTabAdapter; // Adapter mới
 import com.example.ticketapp.databinding.FragmentHomeBinding;
 import com.example.ticketapp.domain.model.Account;
 import com.example.ticketapp.domain.model.Movie;
+import com.example.ticketapp.utils.DialogHelper;
 import com.example.ticketapp.view.Movie.MovieListFragment;
 import com.example.ticketapp.viewmodel.CinemaViewModel;
 import com.example.ticketapp.viewmodel.MovieViewModel;
@@ -64,11 +65,17 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
         super.onViewCreated(view, savedInstanceState);
         hideToolbar();
         profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        
+        // Observe user profile
         profileViewModel.getUserProfile().observe(getViewLifecycleOwner(),user -> {
             if(user != null){
                 initView(user);
+            } else {
+                // Nếu user null, load lại từ Firestore
+                loadUserProfile();
             }
         });
+        
         navController = NavHostFragment.findNavController(HomeFragment.this);
         binding.ivAvatar.setOnClickListener(
                 view1 -> {
@@ -81,12 +88,30 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
         setupMovieTabsViewPager(); // Hợp nhất logic setup vào đây
     }
 
-    private void initView( Account user) {
+    private void initView(Account user) {
         binding.tvUsername.setText(user.getUsername());
         Glide.with(binding.getRoot().getContext())
                 .load(user.getPosterUrl())
                 .error(R.drawable.ic_launcher_background)
                 .into(binding.ivAvatar);
+    }
+    
+    private void loadUserProfile() {
+        profileViewModel.geUserById().observe(getViewLifecycleOwner(), resource -> {
+            if (resource != null) {
+                switch (resource.getStatus()) {
+                    case SUCCESS:
+                        if (resource.getData() != null) {
+                            profileViewModel.setUserProfile(resource.getData());
+                            initView(resource.getData());
+                        }
+                        break;
+                    case ERROR:
+                        // Handle error if needed
+                        break;
+                }
+            }
+        });
     }
 
 
@@ -130,6 +155,8 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
                     break;
                 case ERROR:
                     binding.swipeRefreshLayout.setRefreshing(false);
+                    DialogHelper.showErrorDialog(requireContext(), 
+                        resource.getMessage() != null ? resource.getMessage() : getString(R.string.msg_network_error));
                     break;
             }
         });
@@ -141,10 +168,11 @@ public class HomeFragment extends Fragment implements MovieListFragment.OnMovieS
                 case SUCCESS:
                     binding.swipeRefreshLayout.setRefreshing(false);
                     cinemaAdapter.updateListCinema(resource.getData());
-
                     break;
                 case ERROR:
                     binding.swipeRefreshLayout.setRefreshing(false);
+                    DialogHelper.showErrorDialog(requireContext(), 
+                        resource.getMessage() != null ? resource.getMessage() : getString(R.string.msg_network_error));
                     break;
             }
         });

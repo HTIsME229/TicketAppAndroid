@@ -49,13 +49,8 @@ public class MyTicket extends Fragment implements UpcomingTicketsFragment.OnTick
         bookingViewModel = new ViewModelProvider(requireActivity()).get(BookingViewModel.class);
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
-
-        // 1. Khởi tạo và gán Adapter
-        // QUAN TRỌNG: Truyền 'this' (Fragment hiện tại) vào Adapter
         TicketViewPagerAdapter adapter = new TicketViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
-
-        // 2. Liên kết TabLayout và ViewPager2
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
                     // Đặt tiêu đề cho tab

@@ -67,25 +67,49 @@ public class WatchedTicketsFragment extends Fragment {
             }
         });// Truyền cờ là vé sắp tới (Upcoming = true)
         recyclerView.setAdapter(adapter);
+        
+        // Setup SwipeRefresh
+        setupSwipeRefresh();
+        
         // Bắt đầu quan sát dữ liệu
         observeWatchedTickets();
     }
 
     private void observeWatchedTickets() {
-
-            bookingViewModel.getWatchedTickets().observe(getViewLifecycleOwner(), resource -> {
+        bookingViewModel.getWatchedTickets().observe(getViewLifecycleOwner(), resource -> {
             switch (resource.getStatus()) {
                 case LOADING:
+                    binding.swipeRefreshLayout.setRefreshing(true);
+                    binding.textEmptyList.setVisibility(View.GONE);
                     break;
                 case SUCCESS:
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     List<Ticket> tickets = resource.getData();
-                    adapter.submitList(tickets);
+                    if (tickets != null && !tickets.isEmpty()) {
+                        adapter.submitList(tickets);
+                        binding.textEmptyList.setVisibility(View.GONE);
+                    } else {
+                        binding.textEmptyList.setVisibility(View.VISIBLE);
+                    }
                     break;
                 case ERROR:
+                    binding.swipeRefreshLayout.setRefreshing(false);
+                    binding.textEmptyList.setVisibility(View.VISIBLE);
                     break;
             }
         });
-
+    }
+    
+    private void setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        );
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            bookingViewModel.refreshWatchedTickets();
+        });
     }
 
 }
